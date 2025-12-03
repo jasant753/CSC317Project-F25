@@ -12,6 +12,7 @@ const path = require('path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const csrf = require('csurf');
+const reviewRoutes = require('./routes/reviews');
 
 // Import database configuration
 const { pool } = require('./config/database');
@@ -110,6 +111,7 @@ app.use(setLocals);
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/reviews', reviewRoutes);
 
 // Error handling middleware
 app.use(handleErrors);

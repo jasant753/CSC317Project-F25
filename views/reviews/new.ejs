@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <h1>Add a Movie Review</h1>
+
+    <%- include('../partials/flash-message') %>
+
+    <%- include('../partials/form-errors', { errors }) %>
+
+    <form action="/reviews" method="POST" class="auth-form">
+        <div class="form-group">
+            <label for="movieTitle">Movie Title</label>
+            <input
+                    type="text"
+                    id="movieTitle"
+                    name="movieTitle"
+                    value="<%= oldInput.movieTitle || '' %>"
+                    placeholder="e.g. Jurassic Park"
+                    required
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="rating">Rating (1–5 🥜)</label>
+            <input
+                    type="number"
+                    id="rating"
+                    name="rating"
+                    min="1"
+                    max="5"
+                    value="<%= oldInput.rating || '' %>"
+                    required
+            />
+            <p class="form-hint">Rate how nuts you are about this movie.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="comment">Your Review</label>
+            <textarea
+                    id="comment"
+                    name="comment"
+                    rows="4"
+                    placeholder="What did you think?"
+            ><%= oldInput.comment || '' %></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn primary-btn">Submit Review</button>
+            <a href="/" class="btn secondary-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>

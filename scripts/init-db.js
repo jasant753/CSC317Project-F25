@@ -35,6 +35,28 @@ const createTables = async () => {
     `);
     console.log('✓ Profile images table created');
 
+    // Create movies table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS movies (
+       id SERIAL PRIMARY KEY,
+       title TEXT NOT NULL UNIQUE
+      )
+    `);
+    console.log('✓ Movies table created');
+
+    // Create reviews table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS reviews (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        movie_id INTEGER NOT NULL REFERENCES movies(id) ON DELETE CASCADE,
+        rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+        comment TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('✓ Reviews table created');
+
     // Create session table for connect-pg-simple
     await pool.query(`
       CREATE TABLE IF NOT EXISTS "session" (
