@@ -12,7 +12,6 @@ const path = require('path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const csrf = require('csurf');
-const reviewRoutes = require('./routes/reviews');
 
 // Import database configuration
 const { pool } = require('./config/database');
@@ -21,7 +20,7 @@ const { pool } = require('./config/database');
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
-const movieroutes = require('./routes/movies');
+const movieRoutes = require('./routes/movies');
 const reviewRoutes = require('./routes/reviews');
 
 // Import custom middleware
@@ -118,7 +117,7 @@ app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/reviews', reviewRoutes);
-app.use('/movies', movieroutes);
+app.use('/movies', movieRoutes);
 
 // Error handling middleware
 app.use(handleErrors);
