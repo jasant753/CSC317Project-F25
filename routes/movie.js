@@ -5,6 +5,19 @@ const router = express.Router();
 const Movie = require('../models/Movie');
 const Review = require('../models/Review');
 
+// Get /movies - list all movies
+router.get('/', async (req, res, next) => {
+  try {
+    const movies = await Movie.findAll();
+    res.render('movies/index', {
+      title: 'Movies',
+      movies
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /movies/:id - show one movie and its reviews
 router.get('/:id', async (req, res, next) => {
   try {

@@ -18,6 +18,14 @@ async function findById(id) {
     return result.rows[0] || null;
 }
 
+// Get all movies in order by title
+async function findAll() {
+  const result = await pool.query(
+    'SELECT * FROM movies ORDER BY title ASC'
+  );
+  return result.rows;
+}
+
 // Create new movie title entry
 async function create(title) {
     const result = await pool.query(
@@ -30,5 +38,6 @@ async function create(title) {
 module.exports = {
     findByTitle,
     findById,
+    findAll,
     create,
 };
