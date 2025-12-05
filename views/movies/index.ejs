@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <div class="movies-container">
+    <h1>Movies</h1>
+
+    <div class="action-buttons">
+      <% if (isAuthenticated) { %>
+        <a href="/reviews/new" class="btn primary-btn">Add a Review</a>
+      <% } else { %>
+        <p><a href="/auth/login">Log in</a> to add a review.</p>
+      <% } %>
+    </div>
+
+    <% if (!movies || movies.length === 0) { %>
+      <p>No movies have been reviewed yet.</p>
+    <% } else { %>
+      <ul class="movie-list">
+        <% movies.forEach(movie => { %>
+          <li class="movie-item">
+            <a href="/movies/<%= movie.id %>"><%= movie.title %></a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

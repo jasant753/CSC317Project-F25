@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <div class="movie-details">
+    <h1><%= movie.title %></h1>
+
+    <div class="action-buttons">
+      <% if (isAuthenticated) { %>
+        <a href="/reviews/new" class="btn primary-btn">Add a Review</a>
+      <% } else { %>
+        <p><a href="/auth/login">Log in</a> to add a review.</p>
+      <% } %>
+    </div>
+
+    <% if (!reviews || reviews.length === 0) { %>
+      <p>No reviews yet. Be the first to review this movie!</p>
+    <% } else { %>
+      <div class="reviews-list">
+        <% reviews.forEach(review => { %>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-rating">Rating: <%= review.rating %> / 5</span>
+              <span class="review-author">
+                by <%= review.username %>
+                <% if (review.created_at) { %>
+                  • <%= helpers.formatDate(review.created_at) %>
+                <% } %>
+              </span>
+            </div>
+
+            <% if (review.comment && review.comment.trim().length > 0) { %>
+              <p class="review-comment"><%= review.comment %></p>
+            <% } else { %>
+              <p class="review-comment muted">No comment provided.</p>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
