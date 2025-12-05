@@ -21,6 +21,8 @@ const { pool } = require('./config/database');
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const movieroutes = require('./routes/movies');
+const reviewRoutes = require('./routes/reviews');
 
 // Import custom middleware
 const { setLocals } = require('./middlewares/locals');
@@ -116,6 +118,7 @@ app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/movies', movieroutes);
 
 // Error handling middleware
 app.use(handleErrors);
