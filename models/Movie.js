@@ -1,6 +1,6 @@
 const { pool } = require('../config/database');
 
-// Finds movie by title (case-insensitive)
+// Finds movie by title (case-insensitive, exact match)
 async function findByTitle(title) {
     const result = await pool.query(
         'SELECT * FROM movies WHERE LOWER(title) = LOWER($1)',
@@ -20,10 +20,21 @@ async function findById(id) {
 
 // Get all movies in order by title
 async function findAll() {
-  const result = await pool.query(
-    'SELECT * FROM movies ORDER BY title ASC'
-  );
-  return result.rows;
+    const result = await pool.query(
+        'SELECT * FROM movies ORDER BY title ASC'
+    );
+    return result.rows;
+}
+
+// Search movies by partial title (case-insensitive)
+async function searchByTitle(query) {
+    const result = await pool.query(
+        `SELECT * FROM movies
+         WHERE title ILIKE $1
+         ORDER BY title ASC`,
+        [`%${query}%`]
+    );
+    return result.rows;
 }
 
 // Create new movie title entry
@@ -39,5 +50,6 @@ module.exports = {
     findByTitle,
     findById,
     findAll,
+    searchByTitle,
     create,
 };
