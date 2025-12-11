@@ -561,3 +561,26 @@ details pre {
     margin-bottom: 0.5rem;
   }
 }
+
+
+/*For search bar*/
+.header-search {
+  margin: 10px 0;
+}
+
+.header-search .input-group {
+  display: flex;
+}
+
+.header-search input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+}
+
+.header-search button {
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}
