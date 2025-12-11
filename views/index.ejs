@@ -1,39 +1,68 @@
-<%- include('./partials/header') %>
+<%- include('partials/header') %>
 
-<div class="container">
-  <div class="welcome-section">
-    <h1><%= message %></h1>
-    <p>A simple authentication system for web applications</p>
-    
-    <% if (isAuthenticated) { %>
-      <div class="action-buttons">
-        <a href="/user/profile" class="btn primary-btn">View Profile</a>
-      </div>
-    <% } else { %>
-      <div class="action-buttons">
-        <a href="/auth/login" class="btn primary-btn">Login</a>
-        <a href="/auth/register" class="btn secondary-btn">Register</a>
-      </div>
-    <% } %>
-  </div>
-  
-  <div class="features-section">
-    <h2>Features</h2>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3>User Authentication</h3>
-        <p>Secure login and registration with password hashing</p>
-      </div>
-      <div class="feature-card">
-        <h3>Session Management</h3>
-        <p>Persistent sessions with secure cookies</p>
-      </div>
-      <div class="feature-card">
-        <h3>Protected Routes</h3>
-        <p>Restrict access to authenticated users only</p>
-      </div>
-    </div>
-  </div>
+<div class="home-page container">
+    <!-- Hero section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Track your films, share your takes, go <span class="brand">CinemaNuts</span>.</h1>
+            <p class="hero-subtitle">
+                Rate movies with peanut scores, write reviews, and see what other CinemaNuts are watching.
+            </p>
+
+            <div class="hero-actions">
+                <% if (!isAuthenticated) { %>
+                    <a href="/auth/register" class="btn primary-btn">Create account</a>
+                    <a href="/auth/login" class="btn secondary-btn">Sign in</a>
+                <% } else { %>
+                    <a href="/reviews/new" class="btn primary-btn">Write a review</a>
+                    <a href="/movies" class="btn secondary-btn">Browse movies</a>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-reviews">
+        <h2>What CinemaNuts are saying</h2>
+
+        <% if (!featuredReviews || featuredReviews.length === 0) { %>
+            <p>No reviews yet. Be the first to go nuts over a movie!</p>
+            <% if (isAuthenticated) { %>
+                <a href="/reviews/new" class="btn primary-btn">Write a review</a>
+            <% } else { %>
+                <a href="/auth/register" class="btn primary-btn">Create account</a>
+            <% } %>
+        <% } else { %>
+            <div class="review-grid">
+                <% featuredReviews.forEach(review => { %>
+                    <article class="review-card">
+                        <h3 class="review-movie-title">
+                            <a href="/movies/<%= review.movie_id %>"><%= review.movie_title %></a>
+                        </h3>
+
+                        <p class="review-rating">
+                            <% for (let i = 0; i < review.rating; i++) { %>🥜<% } %>
+                            <span class="rating-number"><%= review.rating %>/5</span>
+                        </p>
+
+                        <% if (review.comment) { %>
+                            <p class="review-snippet">
+                                "<%= review.comment.length > 140 ? review.comment.slice(0, 140) + '…' : review.comment %>"
+                            </p>
+                        <% } else { %>
+                            <p class="review-snippet muted">No comment added.</p>
+                        <% } %>
+
+                        <p class="review-meta">
+                            <span>by <strong><%= review.username %></strong></span>
+                            <% if (helpers && helpers.formatDate) { %>
+                                <span> · <%= helpers.formatDate(review.created_at) %></span>
+                            <% } %>
+                        </p>
+                    </article>
+                <% }) %>
+            </div>
+        <% } %>
+    </section>
 </div>
 
-<%- include('./partials/footer') %>
+<%- include('partials/footer') %>

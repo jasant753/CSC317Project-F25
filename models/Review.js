@@ -24,7 +24,28 @@ async function getReviewsForMovie(movieId) {
     return result.rows;
 }
 
+// Get random reviews with movie title and username
+async function getRandomReviews(limit = 4) {
+    const result = await pool.query(
+        `SELECT r.id,
+                r.rating,
+                r.comment,
+                r.created_at,
+                r.movie_id,
+                m.title AS movie_title,
+                u.username
+         FROM reviews r
+                  JOIN movies m ON r.movie_id = m.id
+                  JOIN users u ON r.user_id = u.id
+         ORDER BY RANDOM()
+             LIMIT $1`,
+        [limit]
+    );
+    return result.rows;
+}
+
 module.exports = {
     createReview,
     getReviewsForMovie,
+    getRandomReviews,
 };
