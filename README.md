@@ -1,4 +1,9 @@
 # Movie Review App (CSC317 Final Project)
+## Team:
+- Justin Santos
+- Jiaming Yu
+- Abraham Kao
+- Joaquin Molina
 
 ## Overview
 
