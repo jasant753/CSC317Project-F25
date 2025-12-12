@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <h1>Members</h1>
+
+    <form action="/members" method="GET" class="search-form" style="margin: 1rem 0 2rem;">
+        <input
+                type="text"
+                name="q"
+                placeholder="Search by username..."
+                value="<%= searchQuery || '' %>"
+                class="search-input"
+        />
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+    <% if (!users || users.length === 0) { %>
+        <% if (searchQuery && searchQuery.trim() !== '') { %>
+            <p>No members found matching "<%= searchQuery %>".</p>
+        <% } else { %>
+            <p>Search for a member by username to see their reviews.</p>
+        <% } %>
+    <% } else { %>
+        <ul class="member-list">
+            <% users.forEach(user => { %>
+                <li class="member-item">
+                    <a href="/members/<%= user.username %>">
+                        <strong><%= user.username %></strong>
+                    </a>
+                    <% if (helpers && helpers.formatDate && user.created_at) { %>
+                        <span class="member-meta">
+              · joined <%= helpers.formatDate(user.created_at) %>
+            </span>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

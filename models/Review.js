@@ -44,8 +44,27 @@ async function getRandomReviews(limit = 4) {
     return result.rows;
 }
 
+// Get all reviews written by a specific user
+async function getReviewsByUser(userId) {
+    const result = await pool.query(
+        `SELECT r.id,
+            r.rating,
+            r.comment,
+            r.created_at,
+            r.movie_id,
+            m.title AS movie_title
+     FROM reviews r
+     JOIN movies m ON r.movie_id = m.id
+     WHERE r.user_id = $1
+     ORDER BY r.created_at DESC`,
+        [userId]
+    );
+    return result.rows;
+}
+
 module.exports = {
     createReview,
     getReviewsForMovie,
     getRandomReviews,
+    getReviewsByUser,
 };

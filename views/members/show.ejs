@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <h1><%= member.username %>'s reviews</h1>
+
+    <% if (!reviews || reviews.length === 0) { %>
+        <p>This member has no reviews.</p>
+    <% } else { %>
+        <div class="review-grid">
+            <% reviews.forEach(review => { %>
+                <article class="review-card">
+                    <h2 class="review-movie-title">
+                        <a href="/movies/<%= review.movie_id %>"><%= review.movie_title %></a>
+                    </h2>
+
+                    <p class="review-rating">
+                        <% for (let i = 0; i < review.rating; i++) { %>🥜<% } %>
+                        <span class="rating-number"><%= review.rating %>/5</span>
+                    </p>
+
+                    <% if (review.comment) { %>
+                        <p class="review-snippet">"<%= review.comment %>"</p>
+                    <% } else { %>
+                        <p class="review-snippet muted">No comment provided.</p>
+                    <% } %>
+
+                    <% if (helpers && helpers.formatDate && review.created_at) { %>
+                        <p class="review-meta">
+                            Reviewed on <%= helpers.formatDate(review.created_at) %>
+                        </p>
+                    <% } %>
+                </article>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

@@ -148,6 +148,20 @@ const updateProfileImageFlag = async (userId, hasImage) => {
   return result.rows[0];
 };
 
+// Search users by partial username
+const searchByUsername = async (q) => {
+    const result = await query(
+        `SELECT id, username, created_at
+     FROM users
+     WHERE username ILIKE $1
+     ORDER BY username ASC`,
+        [`%${q}%`]
+    );
+    return result.rows;
+};
+
+
+
 module.exports = {
   create,
   findByEmail,
@@ -157,5 +171,6 @@ module.exports = {
   usernameExists,
   comparePassword,
   updateUsername,
-  updateProfileImageFlag
+  updateProfileImageFlag,
+  searchByUsername,
 };

@@ -22,6 +22,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const movieRoutes = require('./routes/movies');
 const reviewRoutes = require('./routes/reviews');
+const memberRoutes = require('./routes/members');
 
 // Import custom middleware
 const { setLocals } = require('./middlewares/locals');
@@ -118,6 +119,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/movies', movieRoutes);
+app.use('/members', memberRoutes);
 
 // Error handling middleware
 app.use(handleErrors);
