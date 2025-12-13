@@ -75,8 +75,7 @@ can browse movies, read existing reviews, and search by movie title.
 │   ├── css/
 │   │   └── style.css          # Updated: CinemaNuts branding + homepage styling
 │   ├── js/
-│   └── images/
-│       └── logo.png           # Added: custom CinemaNuts logo
+│   │   └── main.js
 ├── routes/
 │   ├── auth.js
 │   ├── index.js               # Updated: homepage random reviews
@@ -88,7 +87,7 @@ can browse movies, read existing reviews, and search by movie title.
 │   └── init-db.js             # Updated: creates movies and reviews tables
 └── views/
     ├── partials/
-    │   ├── header.ejs         # Updated: logo, nav, global search bar
+    │   ├── header.ejs         # Updated: nav, global search bar
     │   ├── footer.ejs
     │   ├── flash-message.ejs
     │   └── form-errors.ejs
