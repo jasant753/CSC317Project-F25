@@ -7,8 +7,7 @@
 
 ## Overview
 
-This project is a Book/Movie Review Site built on top of the CSC317 authentication template.
-Users can create accounts, log in, and write reviews (rating + comment) for movies. Other users
+This project is a Movie Review Site inspired by sites such as Letterboxd, built on top of the CSC317 authentication template.Users can create accounts, log in, and write reviews (rating + comment) for movies. Other users
 can browse movies, read existing reviews, and search by movie title.
 
 ### Core Entities
@@ -20,14 +19,26 @@ can browse movies, read existing reviews, and search by movie title.
 
 ### Core Features
 
-- User registration and login with server-side validation and password hashing.
-- Session management with `express-session` and PostgreSQL-backed session store.
-- Protected routes (profile, settings, add review) that require authentication.
-- Profile settings page with username update and profile image upload.
-- Add a movie review (rating 1–5, optional comment).
+- Authentication & Sessions
+  - User registration and login with server-side validation
+  - Session management with `express-session` and PostgreSQL-backed session store.
+  - Protected routes (profile, settings, add review) that require authentication.
+  - Profile settings page with username update and profile image upload.
+- Reviews & Movies
+  - Add a movie review (rating 1–5, optional comment)
   - If the movie does not exist yet, it is created.
-- View all movies at `/movies`, with a search bar to filter by title.
-- View a single movie at `/movies/:id`, including all reviews for that movie.
+  - View all movies at `/movies`, ordered alphabetically
+  - Search movies by title using a case-insensitive search bar
+  - View a single movie at `/movies/:id`, including all reviews for that movie
+- Discovery & Browsing
+  - Homepage displays a selection of random reviews to highlight site activity
+  - Movie titles link to their individual review pages
+  - Ratings are displayed visually
+- Members (User Discovery)
+  - Browse and search for users by username at `/members`
+  - View a public member page at `/members/:username`
+  - Displays all reviews written by that user in one place
+  - Each review links back to the corresponding movie
 
 ## Technology Stack
 
@@ -38,19 +49,61 @@ can browse movies, read existing reviews, and search by movie title.
 - **Frontend:** HTML, CSS, vanilla JavaScript
 - **Deployment:** Compatible with Render.com using `DATABASE_URL` and `SESSION_SECRET` environment variables.
 
-## Project Structure (Simplified)
+## Updated Project Structure
+```
+.
+├── app.js                     # Updated: registers movies, reviews, and members routes
+│                              # and configures PostgreSQL sessions + Render settings
+├── config/
+│   └── database.js
+├── controllers/
+│   ├── authController.js
+│   ├── userController.js
+│   ├── reviewController.js    # Added: review creation + movie linking logic
+│   ├── memberController.js    # Added: public user search and profile logic
+├── middlewares/
+│   ├── auth.js
+│   ├── error-handler.js
+│   ├── locals.js              # Updated: exposes auth state + user to all views
+│   └── upload.js
+├── models/
+│   ├── User.js                # Updated: username search + public lookup
+│   ├── Image.js
+│   ├── Movie.js               # Added: movie creation, lookup, search, listing
+│   ├── Review.js              # Added: review creation, homepage + user queries
+├── public/
+│   ├── css/
+│   │   └── style.css          # Updated: CinemaNuts branding + homepage styling
+│   ├── js/
+│   └── images/
+│       └── logo.png           # Added: custom CinemaNuts logo
+├── routes/
+│   ├── auth.js
+│   ├── index.js               # Updated: homepage random reviews
+│   ├── user.js
+│   ├── movies.js              # Added: movie list, search, detail routes
+│   ├── reviews.js             # Added: review submission routes
+│   ├── members.js             # Added: user discovery routes
+├── scripts/
+│   └── init-db.js             # Updated: creates movies and reviews tables
+└── views/
+    ├── partials/
+    │   ├── header.ejs         # Updated: logo, nav, global search bar
+    │   ├── footer.ejs
+    │   ├── flash-message.ejs
+    │   └── form-errors.ejs
+    ├── auth/
+    ├── user/
+    ├── movies/
+    │   ├── index.ejs          # Added: movie list + search UI
+    │   └── show.ejs           # Added: movie detail + reviews
+    ├── reviews/
+    │   └── new.ejs            # Added: review submission form
+    └── members/
+        ├── index.ejs          # Added: user search page
+        └── show.ejs           # Added: public user review page
 
-- `app.js` – Main application setup (Express, sessions, views, routes, error handling).
-- `config/database.js` – PostgreSQL pool and helper functions.
-- `scripts/init-db.js` – Creates `users`, `profile_images`, `movies`, `reviews`, and `session` tables.
-- `models/` – Database access for:
-  - `User`, `Image`, `Movie`, `Review`
-- `controllers/` – Logic for:
-  - `authController`, `userController`, `reviewController`
-- `routes/` – Express routers:
-  - `index` (home/about), `auth`, `user`, `reviews`, `movies`
-- `views/` – EJS templates for pages and partials.
-- `public/` – Static assets (`css/style.css`, `js/main.js`).
+```
 
 ## Team Responsibilities
 
